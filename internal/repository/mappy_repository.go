@@ -26,7 +26,7 @@ func (r *MappyStruct) FetchMappySearch(query string) (models.MappySearch, error)
 		return payload, err
 	}
 
-	request.Header.Add("apikey", config.GetConfig("f2wjQp1eFdTe26YcAP3K92m7d9cV8x1Z"))
+	request.Header.Add("apikey", config.GetConfig("MAPPY_API_KEY"))
 	request.Header.Add("Accept", "application/json, text/plain, */*")
 	request.Header.Add("Referer", "https://fr.mappy.com/")
 	request.Header.Add("Origin", "https://fr.mappy.com/")
@@ -74,7 +74,6 @@ func (r *MappyStruct) FetchMappyGeo(id string) (models.MappyGeo, error) {
 		return payload, err
 	}
 
-	fmt.Print(string(body))
 	err = json.Unmarshal([]byte(body), &payload)
 	if err != nil {
 		return payload, nil
