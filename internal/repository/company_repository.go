@@ -8,7 +8,13 @@ import (
 	"github.com/gabrielssssssssss/kestrel/internal/models"
 )
 
-func FetchRechercheEntreprise(url string) (models.Company, error) {
+type CompanyRepository struct{}
+
+func NewCompanyRepository() *CompanyRepository {
+	return &CompanyRepository{}
+}
+
+func (r *CompanyRepository) FetchRechercheEntreprise(url string) (models.Company, error) {
 	var payload models.Company
 
 	response, err := http.Get(url)
