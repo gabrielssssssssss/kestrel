@@ -34,5 +34,6 @@ func (h *CompanyHandler) HandleCompanyRequest(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}
+
 	c.JSON(http.StatusOK, payload)
 }
