@@ -1,10 +1,10 @@
 package models
 
 type Company struct {
-	RESULTS       []CompanyResult
-	TOTAL_RESULTS int `json:"total_results"`
-	PAGE          int `json:"page"`
-	TOTAL_PAGES   int `json:"total_pages"`
+	RESULTS       []CompanyResult `json:"results"`
+	TOTAL_RESULTS int             `json:"total_results"`
+	PAGE          int             `json:"page"`
+	TOTAL_PAGES   int             `json:"total_pages"`
 }
 
 type CompanyResult struct {
@@ -15,13 +15,13 @@ type CompanyResult struct {
 	NOMBRE_ETABLISSEMENTS         int    `json:"nombre_etablissements"`
 	NOMBRE_ETABLISSEMENTS_OUVERTS int    `json:"nombre_etablissements_ouverts"`
 	SIEGE                         Siege
-	CATEGORIE_ENTREPRISE          string `json:"categorie_entreprise"`
-	DATE_CREATION                 string `json:"date_creation"`
-	DATE_DEBUT_ACTIVITE           string `json:"date_debut_activite"`
-	DATE_FERMETURE                string `json:"date_fermeture"`
-	DATE_MISE_A_JOUR              string `json:"date_mise_a_jour"`
-	DATE_MISE_A_JOUR_INSEE        string `json:"date_mise_a_jour_insee"`
-	Dirigeants                    []Dirigeant
+	CATEGORIE_ENTREPRISE          string      `json:"categorie_entreprise"`
+	DATE_CREATION                 string      `json:"date_creation"`
+	DATE_DEBUT_ACTIVITE           string      `json:"date_debut_activite"`
+	DATE_FERMETURE                string      `json:"date_fermeture"`
+	DATE_MISE_A_JOUR              string      `json:"date_mise_a_jour"`
+	DATE_MISE_A_JOUR_INSEE        string      `json:"date_mise_a_jour_insee"`
+	Dirigeants                    []Dirigeant `json:"dirigeants"`
 }
 
 type Siege struct {
