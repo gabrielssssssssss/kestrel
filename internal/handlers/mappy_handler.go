@@ -17,17 +17,13 @@ func NewMappyHandler() *MappyHandler {
 	}
 }
 
-func (h *MappyHandler) HandleMappySearchRequest(c *gin.Context) {
-	payload, err := h.service.GetMappySearch(c.Query("q"))
+func (h *MappyHandler) HandleMappy(c *gin.Context) {
+	mappyId, err := h.service.GetMappySearch(c.Query("q"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	c.JSON(http.StatusOK, payload.POIS[0])
-}
-
-func (h *MappyHandler) HandleMappyGeoRequest(c *gin.Context) {
-	payload, err := h.service.GetMappyGeo(c.Query("id"))
+	payload, err := h.service.GetMappyGeo(mappyId.POIS[0].ID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}

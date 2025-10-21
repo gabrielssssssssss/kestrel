@@ -3,6 +3,8 @@ module github.com/gabrielssssssssss/kestrel
 go 1.24.9
 
 require (
+	github.com/PuerkitoBio/goquery v1.10.3 // indirect
+	github.com/andybalholm/cascadia v1.3.3 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/bytedance/sonic v1.14.1 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
@@ -27,6 +29,7 @@ require (
 	github.com/quic-go/quic-go v0.55.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.3.0 // indirect
+	github.com/vrdominguez/dinaip-go v0.2.2 // indirect
 	go.uber.org/mock v0.6.0 // indirect
 	golang.org/x/arch v0.22.0 // indirect
 	golang.org/x/crypto v0.43.0 // indirect

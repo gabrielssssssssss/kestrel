@@ -10,7 +10,7 @@ func main() {
 	godotenv.Load(".env")
 	app := gin.Default()
 	app.GET("/company", handlers.NewCompanyHandler().HandleCompanyRequest)
-	app.GET("/mappy-search", handlers.NewMappyHandler().HandleMappySearchRequest)
-	app.GET("/mappy-geo", handlers.NewMappyHandler().HandleMappyGeoRequest)
+	app.GET("/mappy", handlers.NewMappyHandler().HandleMappy)
+	app.GET("/linkedin", handlers.NewLinkedinHandler().HandleLinkedin)
 	app.Run(":8080")
 }
