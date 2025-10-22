@@ -15,7 +15,7 @@ func NewLinkedinRepository() *LinkedinRepository {
 func (r *LinkedinRepository) FetchLinkedinCompany(company string) ([]duckduckgo.SearchResult, error) {
 	var payload []duckduckgo.SearchResult
 
-	query := fmt.Sprintf(`q=site%%3Alinkedin.com%%2Fin+"%s"&kl=fr-fr`, company)
+	query := fmt.Sprintf(`q=site:fr.linkedin.com/in "%s"`, company)
 	body, err := duckduckgo.GetRawHTML(query)
 	fmt.Println(body)
 	if err != nil {
