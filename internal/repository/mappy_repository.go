@@ -42,6 +42,7 @@ func (r *MappyStruct) FetchMappySearch(query string) (models.MappySearch, error)
 		return payload, err
 	}
 
+	fmt.Println(string(body))
 	err = json.Unmarshal([]byte(body), &payload)
 	if err != nil {
 		return payload, err

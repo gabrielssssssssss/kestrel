@@ -1,25 +1,53 @@
 package models
 
 type Website struct {
-	Target     string      `json:"target"`
-	Subdomains []Subdomain `json:"subdomains"`
-	CMS        string      `json:"cms"`
+	Target Domain `json:"target"`
 }
 
 type Domain struct {
-	Ip          string      `json:"ip"`
-	Domain      string      `json:"domain"`
-	Certificate Certificate `json:"certificate"`
-	Whois       Whois       `json:"whois"`
-	Links       []string    `json:"links"`
+	Ip           IpInfo            `json:"ip"`
+	Domain       string            `json:"domain"`
+	Ports        map[string]string `json:"ports"`
+	Headers      map[string]string `json:"headers"`
+	Certificate  Certificate       `json:"certificate"`
+	Whois        Whois             `json:"whois"`
+	Technologies []string          `json:"technologies"`
+	Perfomances  Lighthouse        `json:"performances"`
+	Links        []string          `json:"links"`
+	Emails       []string          `json:"emails"`
+	Phones       []string          `json:"phones"`
+	Subdomains   []Subdomain       `json:"subdomains"`
 }
 
 type Subdomain struct {
-	Ip          string      `json:"ip"`
-	Subdomain   string      `json:"subdomain"`
-	Certificate Certificate `json:"certificate"`
-	Whois       Whois       `json:"whois"`
-	Links       []string    `json:"links"`
+	Ip           IpInfo              `json:"ip"`
+	Subdomain    string              `json:"subdomain"`
+	Headers      map[string]string   `json:"headers"`
+	Certificate  Certificate         `json:"certificate"`
+	Whois        Whois               `json:"whois"`
+	Technologies map[string]struct{} `json:"technologies"`
+	Links        []string            `json:"links"`
+	Emails       []string            `json:"emails"`
+	Phones       []string            `json:"phones"`
+}
+
+type IpInfo struct {
+	Ip       string `json:"ip"`
+	Hostname string `json:"hostname"`
+	City     string `json:"city"`
+	Region   string `json:"region"`
+	Country  string `json:"country"`
+	Loc      string `json:"loc"`
+	Org      string `json:"org"`
+	Postal   string `json:"postal"`
+	Timezone string `json:"timezone"`
+}
+
+type Lighthouse struct {
+	Perfomance    string `json:"perfomance"`
+	Accessibility string `json:"accessibility"`
+	BestPractices string `json:"best_practices"`
+	SEO           string `json:"seo"`
 }
 
 type Whois struct {

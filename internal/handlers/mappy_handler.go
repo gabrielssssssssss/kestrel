@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gabrielssssssssss/kestrel/internal/services"
@@ -23,6 +24,7 @@ func (h *MappyHandler) HandleMappy(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}
 
+	fmt.Print(mappyId)
 	payload, err := h.service.GetMappyGeo(mappyId.POIS[0].ID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())

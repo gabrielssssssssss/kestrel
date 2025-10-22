@@ -12,5 +12,5 @@ func main() {
 	app.GET("/company", handlers.NewCompanyHandler().HandleCompanyRequest)
 	app.GET("/mappy", handlers.NewMappyHandler().HandleMappy)
 	app.GET("/linkedin", handlers.NewLinkedinHandler().HandleLinkedin)
-	app.Run(":8080")
+	app.Run(":8081")
 }
