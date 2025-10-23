@@ -1,8 +1,12 @@
 package repository
 
 import (
+	"encoding/base64"
+
 	"github.com/gabrielssssssssss/kestrel/internal/models"
+	"github.com/gabrielssssssssss/kestrel/pkg/lighthouse"
 	"github.com/gabrielssssssssss/kestrel/pkg/networks"
+	"github.com/gabrielssssssssss/kestrel/pkg/website2screenshot"
 )
 
 type WebsiteRepository struct{}
@@ -14,33 +18,72 @@ func NewWebsiteRepository() *WebsiteRepository {
 func (r *WebsiteRepository) FetchWebsite(domain string) (models.Website, error) {
 	var payload models.Website
 
-	// ipAddress, err := networks.GetIpFromDomain(domain)
+	ipAddress, err := networks.GetIpFromDomain(domain)
+	if err != nil {
+		return payload, err
+	}
+
+	ipInfo, err := networks.GetIpInfoFromIp(ipAddress)
+	if err != nil {
+		return payload, err
+	}
+
+	// ports, err := networks.PortsOpen(ipAddress)
 	// if err != nil {
 	// 	return payload, err
 	// }
-	// ipInfo, err := networks.GetIpInfoFromIp(ipAddress)
+
+	certificate, err := networks.GetSslCertificate(domain)
+	if err != nil {
+		return payload, err
+	}
+
+	// whois, err := networks.WhoisInfo(domain)
 	// if err != nil {
 	// 	return payload, err
 	// }
-	// ports := networks.PortsOpen(ipAddress)
 
-	// url := fmt.Sprintf("http://%s", domain)
-	// response, err := http.Get(url)
-	// if err != nil {
-	// 	return payload, err
-	// }
+	technologies, err := networks.GetTechnologies(domain)
+	if err != nil {
+		return payload, err
+	}
 
-	// headers := response.Header
+	lighthouse, err := lighthouse.Monitor("https://" + domain)
+	if err != nil {
+		return payload, err
+	}
 
-	// fmt.Println(ipInfo)
-	// fmt.Println(ports)
-	// fmt.Println(headers)
+	emails, phone, socialsMedias, err := networks.GetCoordinates(domain)
+	if err != nil {
+		return payload, err
+	}
 
-	// truc, err := networks.GetSslCertificate(domain)
-	// if err != nil {
-	// 	return payload, err
-	// }
-	// fmt.Println(truc)
-	networks.WhoisInfo(domain)
+	screenshot, err := website2screenshot.NavigateToPage("https://" + domain)
+	if err != nil {
+		return payload, err
+	}
+
+	subdomains, err := networks.GetSubdomain(domain)
+	if err != nil {
+		return payload, err
+	}
+
+	payload = models.Website{
+		Target: models.Domain{
+			Ip:     ipInfo,
+			Domain: domain,
+			// Ports:        ports,
+			Certificate: certificate,
+			// Whois:        whois,
+			Technologies: technologies,
+			Perfomances:  *lighthouse,
+			Emails:       emails,
+			Phones:       phone,
+			SocialMedias: socialsMedias,
+			Subdomains:   subdomains,
+			Screenshot:   base64.StdEncoding.EncodeToString(screenshot),
+		},
+	}
+
 	return payload, nil
 }
