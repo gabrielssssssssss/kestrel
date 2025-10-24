@@ -9,9 +9,10 @@ import (
 func main() {
 	godotenv.Load(".env")
 	app := gin.Default()
-	app.GET("/company", handlers.NewCompanyHandler().HandleCompanyRequest)
-	app.GET("/mappy", handlers.NewMappyHandler().HandleMappy)
-	app.GET("/linkedin", handlers.NewLinkedinHandler().HandleLinkedin)
-	app.GET("/website", handlers.NewWebsiteHandler().HandleWebsite)
+	app.GET("/company", handlers.NewCompanyHandler().GetCompanyHandler)
+	// app.GET("/company", handlers.NewCompanyHandler().HandleCompanyRequest)
+	// app.GET("/mappy", handlers.NewMappyHandler().HandleMappy)
+	// app.GET("/linkedin", handlers.NewLinkedinHandler().HandleLinkedin)
+	// app.GET("/website", handlers.NewWebsiteHandler().HandleWebsite)
 	app.Run(":8081")
 }

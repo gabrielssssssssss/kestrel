@@ -15,6 +15,6 @@ func NewCompanyService() *CompanyService {
 	}
 }
 
-func (s *CompanyService) GetCompany(url string) (models.Company, error) {
-	return s.repo.FetchRechercheEntreprise(url)
+func (s *CompanyService) GetCompany(sirene string) (models.Company, error) {
+	return s.repo.FetchRechercheEntreprise(sirene)
 }

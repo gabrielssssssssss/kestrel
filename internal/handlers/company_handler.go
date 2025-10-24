@@ -2,37 +2,46 @@ package handlers
 
 import (
 	"net/http"
-	"net/url"
 
+	"github.com/gabrielssssssssss/kestrel/internal/models"
 	"github.com/gabrielssssssssss/kestrel/internal/services"
 	"github.com/gin-gonic/gin"
 )
 
 type CompanyHandler struct {
-	service *services.CompanyService
+	serviceCompany *services.CompanyService
+	serviceGmaps   *services.GoogleMapsService
 }
 
 func NewCompanyHandler() *CompanyHandler {
 	return &CompanyHandler{
-		service: services.NewCompanyService(),
+		serviceCompany: services.NewCompanyService(),
+		serviceGmaps:   services.NewGoogleMapsService(),
 	}
 }
 
-func (h *CompanyHandler) HandleCompanyRequest(c *gin.Context) {
-	params := url.Values{}
-	if q := c.Query("q"); q != "" {
-		params.Add("q", q)
-	}
-	if cp := c.Query("code_postal"); cp != "" {
-		params.Add("code_postal", cp)
-	}
-	if dep := c.Query("departement"); dep != "" {
-		params.Add("departement", dep)
-	}
+func (h *CompanyHandler) GetCompanyHandler(c *gin.Context) {
+	var payload models.Company
+	sirene := c.Query("sirene")
 
-	payload, err := h.service.GetCompany("https://recherche-entreprises.api.gouv.fr/search?" + params.Encode())
+	company, err := h.serviceCompany.GetCompany(sirene)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	placeId, err := h.serviceGmaps.GetPlaceId(company.Result[0].NomComplet + " " + company.Result[0].Siege.Adresse)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	gmapsResult, err := h.serviceGmaps.GetPlaceDetails(placeId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	payload = models.Company{
+		Result:     company.Result,
+		GoogleMaps: gmapsResult,
 	}
 
 	c.JSON(http.StatusOK, payload)
