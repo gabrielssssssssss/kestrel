@@ -11,9 +11,5 @@ func main() {
 	app := gin.Default()
 	app.GET("/companies/search", handlers.NewCompaniesHandler().GetCompanyHandler)
 	app.GET("/companies/sirene", handlers.NewCompaniesHandler().GetSireneHandler)
-	// app.GET("/company", handlers.NewCompanyHandler().HandleCompanyRequest)
-	// app.GET("/mappy", handlers.NewMappyHandler().HandleMappy)
-	// app.GET("/linkedin", handlers.NewLinkedinHandler().HandleLinkedin)
-	// app.GET("/website", handlers.NewWebsiteHandler().HandleWebsite)
 	app.Run(":8081")
 }

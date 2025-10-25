@@ -19,7 +19,7 @@ func NewSireneRepository() *SireneRepository {
 
 func (r *SireneRepository) FetchSirene(company, sector string) (string, error) {
 	values := map[string]interface{}{
-		"model": "gpt-5-mini",
+		"model": "gpt-5-mini-2025-08-07",
 		"tools": []map[string]interface{}{
 			{
 				"type": "web_search",
@@ -53,6 +53,7 @@ func (r *SireneRepository) FetchSirene(company, sector string) (string, error) {
 	}
 
 	request.Header.Add("Authorization", "Bearer "+config.GetConfig("OPENAI_API_KEY"))
+	request.Header.Add("Content-Type", "application/json")
 
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {

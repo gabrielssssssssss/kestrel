@@ -23,8 +23,8 @@ type GoogleMapsResult struct {
 }
 
 type GoogleMapsOpeningHours struct {
-	OpenNow     bool   `json:"open_now"`
-	WeekdayText string `json:"weekday_text"`
+	OpenNow     bool     `json:"open_now"`
+	WeekdayText []string `json:"weekday_text"`
 }
 
 type GoogleMapsReviews struct {

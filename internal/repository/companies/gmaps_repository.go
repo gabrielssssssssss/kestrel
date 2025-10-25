@@ -71,7 +71,11 @@ func (r *GoogleMapsStruct) FetchPlaceDetails(placeId string) (models.GoogleMaps,
 		return payload, nil
 	}
 
+	fmt.Println(string(body))
 	err = json.Unmarshal([]byte(body), &payload)
+	if err != nil {
+		return payload, nil
+	}
 
 	return payload, nil
 }
