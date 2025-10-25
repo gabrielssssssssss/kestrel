@@ -6,17 +6,17 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/gabrielssssssssss/kestrel/internal/models"
+	models "github.com/gabrielssssssssss/kestrel/internal/models/companies"
 )
 
-type CompanyRepository struct{}
+type OrganizationRepository struct{}
 
-func NewCompanyRepository() *CompanyRepository {
-	return &CompanyRepository{}
+func NewCompanyRepository() *OrganizationRepository {
+	return &OrganizationRepository{}
 }
 
-func (r *CompanyRepository) FetchRechercheEntreprise(sirene string) (models.Company, error) {
-	var payload models.Company
+func (r *OrganizationRepository) FetchOrganization(sirene string) (models.Organization, error) {
+	var payload models.Organization
 
 	params := url.Values{}
 	params.Add("q", sirene)

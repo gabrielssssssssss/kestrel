@@ -1,11 +1,6 @@
 package models
 
-type Company struct {
-	Result     []CompanyResult `json:"results"`
-	GoogleMaps GoogleMaps      `json:"google_maps"`
-}
-
-type CompanyResult struct {
+type Organization struct {
 	Siren                       string        `json:"siren"`
 	NomComplet                  string        `json:"nom_complet"`
 	NomRaisonSociale            string        `json:"nom_raison_sociale"`

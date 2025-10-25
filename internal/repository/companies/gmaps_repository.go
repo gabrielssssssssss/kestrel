@@ -8,7 +8,7 @@ import (
 	"net/url"
 
 	"github.com/gabrielssssssssss/kestrel/internal/config"
-	"github.com/gabrielssssssssss/kestrel/internal/models"
+	models "github.com/gabrielssssssssss/kestrel/internal/models/companies"
 )
 
 type GoogleMapsStruct struct{}
