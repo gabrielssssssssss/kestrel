@@ -15,6 +15,6 @@ func NewOrganizationService() *OrganizationService {
 	}
 }
 
-func (s *OrganizationService) GetOrganization(sirene string) (models.Organization, error) {
+func (s *OrganizationService) GetOrganization(sirene string) (models.OrganizationResult, error) {
 	return s.repo.FetchOrganization(sirene)
 }

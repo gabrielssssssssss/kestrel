@@ -43,7 +43,11 @@ func (r *GoogleMapsStruct) FetchPlaceId(query string) (string, error) {
 		return "", err
 	}
 
-	return payload.Candidates[0].PlaceId, nil
+	if len(payload.Candidates) >= 1 {
+		return payload.Candidates[0].PlaceId, nil
+	}
+
+	return "", nil
 }
 
 func (r *GoogleMapsStruct) FetchPlaceDetails(placeId string) (models.GoogleMaps, error) {

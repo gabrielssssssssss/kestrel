@@ -34,22 +34,27 @@ func (h *CompaniesHandler) GetSireneHandler(c *gin.Context) {
 }
 
 func (h *CompaniesHandler) GetCompanyHandler(c *gin.Context) {
-	var payload models.Company
-	sirene := c.Query("sirene")
+	var (
+		payload    models.Company
+		googleMaps models.GoogleMaps
+		sirene     = c.Query("sirene")
+	)
 
 	organization, err := h.serviceCompany.GetOrganization(sirene)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	placeId, err := h.serviceGmaps.GetPlaceId(organization.NomComplet + " " + organization.Siege.Adresse)
+	placeId, err := h.serviceGmaps.GetPlaceId(organization.Result[0].NomComplet + " " + organization.Result[0].Siege.Adresse)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	googleMaps, err := h.serviceGmaps.GetPlaceDetails(placeId)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+	if placeId != "" {
+		googleMaps, err = h.serviceGmaps.GetPlaceDetails(placeId)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, err.Error())
+		}
 	}
 
 	payload = models.Company{

@@ -15,8 +15,8 @@ func NewCompanyRepository() *OrganizationRepository {
 	return &OrganizationRepository{}
 }
 
-func (r *OrganizationRepository) FetchOrganization(sirene string) (models.Organization, error) {
-	var payload models.Organization
+func (r *OrganizationRepository) FetchOrganization(sirene string) (models.OrganizationResult, error) {
+	var payload models.OrganizationResult
 
 	params := url.Values{}
 	params.Add("q", sirene)

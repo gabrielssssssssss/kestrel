@@ -1,5 +1,9 @@
 package models
 
+type OrganizationResult struct {
+	Result []Organization `json:"results"`
+}
+
 type Organization struct {
 	Siren                       string        `json:"siren"`
 	NomComplet                  string        `json:"nom_complet"`
