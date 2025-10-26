@@ -1,12 +1,9 @@
 package repository
 
 import (
-	"encoding/base64"
-
 	"github.com/gabrielssssssssss/kestrel/internal/models"
 	"github.com/gabrielssssssssss/kestrel/pkg/lighthouse"
 	"github.com/gabrielssssssssss/kestrel/pkg/networks"
-	"github.com/gabrielssssssssss/kestrel/pkg/website2screenshot"
 )
 
 type WebsiteRepository struct{}
@@ -58,11 +55,6 @@ func (r *WebsiteRepository) FetchWebsite(domain string) (models.Website, error) 
 		return payload, err
 	}
 
-	screenshot, err := website2screenshot.NavigateToPage("https://" + domain)
-	if err != nil {
-		return payload, err
-	}
-
 	subdomains, err := networks.GetSubdomain(domain)
 	if err != nil {
 		return payload, err
@@ -81,7 +73,6 @@ func (r *WebsiteRepository) FetchWebsite(domain string) (models.Website, error) 
 			Phones:       phone,
 			SocialMedias: socialsMedias,
 			Subdomains:   subdomains,
-			Screenshot:   base64.StdEncoding.EncodeToString(screenshot),
 		},
 	}
 
