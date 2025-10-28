@@ -15,6 +15,6 @@ func NewEmployeeService() *EmployeeService {
 	}
 }
 
-func (s *EmployeeService) GetEmployees(query string) (models.Employee, error) {
-	return s.repo.FetchEmployee(query)
+func (s *EmployeeService) GetEmployees(query string, naf string) (models.Employee, error) {
+	return s.repo.FetchEmployee(query, naf)
 }

@@ -14,7 +14,11 @@ hierarchy_prompt:
 
     Instructions précises :
       1. Pour chaque employé, tu dois déduire sa position dans l'entreprise en utilisant les informations de "Title", "Snippet" et "Redirect".
-      2. Inclure uniquement les employés confirmés comme appartenant à l'entreprise. Il est impératif d’être absolument sûr avant d’indiquer qu’un employé travaille dans l’entreprise ; si ce n’est pas explicitement vérifiable, ne pas l’inclure.
+      2. Inclure tous les profils fournis, mais :
+         - **Tu ne dois définir "employed": true que si les informations du profil prouvent de manière explicite, directe et indiscutable que la personne travaille actuellement dans cette entreprise.**
+         - **Le nom de l'entreprise (en minuscules ou majuscules) doit apparaître dans au moins un des champs du profil (Title, Snippet, etc.) pour que `employed` soit `true`.**
+         - **Toute incertitude, mention passée ("ancien", "ex-", "previously at", etc.), absence de preuve explicite ou simple mention dans un extrait doit entraîner "employed": false.**
+         - **Ne jamais faire d’inférence implicite. Il vaut mieux avoir `"employed": false` que d’exclure un profil du JSON.**
       3. Ajouter une clé `employed` pour chaque employé, un booléen indiquant s’il travaille encore dans l’entreprise ou non.
       4. Fournir un JSON structuré contenant :
          - "company" : nom de l'entreprise
@@ -25,8 +29,15 @@ hierarchy_prompt:
             - "hierarchy_level" (ex: Direction, Management intermédiaire, Encadrement local, Personnel opérationnel, Support/Communication, Ressources humaines)
             - "linkedin"
             - "employed"
-      5. Ne répondre qu’avec le JSON final, sans aucun texte supplémentaire.
-
+      5. Ne répondre **qu’avec le JSON final**, sans aucun texte supplémentaire, sans explication, sans balise de code (pas de ```json``` ni ```), ni texte avant ou après.
+      6. Le résultat doit être du JSON brut, valide et directement parsable.
+      7. Le résultat final doit être un unique objet JSON commençant par `{` et se terminant par `}`.
+      8. Ne jamais encapsuler le résultat dans une liste `[]`, même s’il n’y a qu’une seule entreprise.
+      9. Pour savoir si un membre fait partie réellement de l'entreprise, il faut qu'il ait le nom de l'entreprise cité dans au moins un des champs. (acronyme, similitude, etc.)
+      10. Si le lien Linkedin n'est pas sous le format https://www.linkedin.com/in/ alors ce n'est pas un profil employé.
+      11. Les résultats fournis par l'utilisateur ne sont pas exacts, ils proviennent d'une recherche sur Internet. L'utilisateur donnera le code NAF de l'entreprise pour que tu saches son secteur d'activité.  
+      12. Important, twitterImage que tu verras dans le JSON envoyer par l'utilisateur. Est la picture que tu dois mettre dans le résultat.
+      13. **Toujours inclure tous les profils fournis dans le JSON final, même si `employed` est `false`.**
   example: |
     {
       "company": "Auralis Transports",
@@ -34,6 +45,7 @@ hierarchy_prompt:
       "employees": [
         {
           "name": "Clara Montrose",
+          "pictures"  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpEnMCOR-ytx0ZXHO2rgJlezc4CfXm5iHZMEjL8fSfOciDiTG4CU0Uc8QO&s",
           "position": "Directrice Générale",
           "hierarchy_level": "Direction",
           "linkedin": "https://fr.linkedin.com/in/clara-montrose",
@@ -42,4 +54,20 @@ hierarchy_prompt:
       ]
     }
 
-  user_input: "Voici le dictionnaire fourni par l'utilisateur [#COMPANY]: [#JSON]"
+  structure_golang: |
+    type Employee struct {
+      Company       string   `json:"company"`
+      EmployeeCount int      `json:"employee_count"`
+      Worker        []Worker `json:"employees"`
+    }
+
+    type Worker struct {
+      Name      string `json:"name"`
+      Pictures  string `json:"pictures"`
+      Position  string `json:"position"`
+      Hierarchy string `json:"hierarchy_level"`
+      Linkedin  string `json:"linkedin"`
+      Employed  bool   `json:"employed"`
+    }
+
+  user_input: "Voici le dictionnaire fourni par l'utilisateur [#COMPANY] et son code NAF [#NAF]: [#JSON]"

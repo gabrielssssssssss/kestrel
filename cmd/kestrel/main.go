@@ -12,5 +12,6 @@ func main() {
 	app.GET("/companies/search", handlers.NewCompaniesHandler().GetCompanyHandler)
 	app.GET("/companies/sirene", handlers.NewCompaniesHandler().GetSireneHandler)
 	app.GET("/companies/employees", handlers.NewCompaniesHandler().GetEmployeeHandler)
+	app.GET("/companies/website", handlers.NewCompaniesHandler().GetWebsiteHandler)
 	app.Run(":8081")
 }

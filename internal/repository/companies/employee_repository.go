@@ -2,13 +2,12 @@ package repository
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
 
 	models "github.com/gabrielssssssssss/kestrel/internal/models/companies"
+	search_engine "github.com/gabrielssssssssss/kestrel/pkg/google/cse"
 	"github.com/gabrielssssssssss/kestrel/pkg/helpers"
 	"github.com/gabrielssssssssss/kestrel/pkg/openai"
-	search_engine "github.com/gabrielssssssssss/kestrel/pkg/search-engine"
 )
 
 type EmployeeStruct struct{}
@@ -17,10 +16,10 @@ func NewEmployeeRepository() *EmployeeStruct {
 	return &EmployeeStruct{}
 }
 
-func (r *EmployeeStruct) FetchEmployee(query string) (models.Employee, error) {
+func (r *EmployeeStruct) FetchEmployee(query string, naf string) (models.Employee, error) {
 	var payload models.Employee
 
-	rawHtml, err := search_engine.GetRawHtml("linkedin.com", query)
+	rawHtml, err := search_engine.GetRawHtml("fr.linkedin.com/in", query)
 	if err != nil {
 		return payload, err
 	}
@@ -30,7 +29,7 @@ func (r *EmployeeStruct) FetchEmployee(query string) (models.Employee, error) {
 		return payload, err
 	}
 
-	prompt := strings.NewReplacer("[#COMPANY]", query, "[#JSON]", parsed).Replace(helpers.ReadYaml("./prompt/employee.yaml"))
+	prompt := strings.NewReplacer("[#COMPANY]", query, "[#NAF]", naf, "[#JSON]", parsed).Replace(helpers.ReadYaml("./prompt/employee.yaml"))
 	response, err := openai.PromptTurbo(prompt)
 	if err != nil {
 		return payload, err
@@ -40,6 +39,6 @@ func (r *EmployeeStruct) FetchEmployee(query string) (models.Employee, error) {
 	if err != nil {
 		return payload, err
 	}
-	fmt.Println(payload)
+
 	return payload, nil
 }

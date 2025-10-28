@@ -13,6 +13,7 @@ type CompaniesHandler struct {
 	serviceCompany  *services.OrganizationService
 	serviceGmaps    *services.GoogleMapsService
 	serviceEmployee *services.EmployeeService
+	serviceWebsite  *services.WebsiteService
 }
 
 func NewCompaniesHandler() *CompaniesHandler {
@@ -21,6 +22,7 @@ func NewCompaniesHandler() *CompaniesHandler {
 		serviceCompany:  services.NewOrganizationService(),
 		serviceGmaps:    services.NewGoogleMapsService(),
 		serviceEmployee: services.NewEmployeeService(),
+		serviceWebsite:  services.NewWebsiteService(),
 	}
 }
 
@@ -65,10 +67,19 @@ func (h *CompaniesHandler) GetCompanyHandler(c *gin.Context) {
 }
 
 func (h *CompaniesHandler) GetEmployeeHandler(c *gin.Context) {
-	query := c.Query("query")
-	employees, err := h.serviceEmployee.GetEmployees(query)
+	query, naf := c.Query("query"), c.Query("naf")
+	employees, err := h.serviceEmployee.GetEmployees(query, naf)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}
 	c.JSON(http.StatusOK, employees)
+}
+
+func (h *CompaniesHandler) GetWebsiteHandler(c *gin.Context) {
+	domain := c.Query("d")
+	website, err := h.serviceWebsite.GetWebsite(domain)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+	}
+	c.JSON(http.StatusOK, website)
 }

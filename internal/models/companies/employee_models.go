@@ -8,6 +8,7 @@ type Employee struct {
 
 type Worker struct {
 	Name      string `json:"name"`
+	Pictures  string `json:"pictures"`
 	Position  string `json:"position"`
 	Hierarchy string `json:"hierarchy_level"`
 	Linkedin  string `json:"linkedin"`

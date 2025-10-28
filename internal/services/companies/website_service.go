@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/gabrielssssssssss/kestrel/internal/models"
-	"github.com/gabrielssssssssss/kestrel/internal/repository"
+	models "github.com/gabrielssssssssss/kestrel/internal/models/companies"
+	repository "github.com/gabrielssssssssss/kestrel/internal/repository/companies"
 )
 
 type WebsiteService struct {

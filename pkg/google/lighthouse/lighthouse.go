@@ -4,11 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/gabrielssssssssss/kestrel/internal/config"
-	"github.com/gabrielssssssssss/kestrel/internal/models"
+	models "github.com/gabrielssssssssss/kestrel/internal/models/companies"
 )
 
 func Monitor(url string) (*models.Lighthouse, error) {
@@ -58,6 +57,5 @@ func Monitor(url string) (*models.Lighthouse, error) {
 		}
 	}
 
-	log.Printf("%+v\n", lh)
 	return lh, nil
 }

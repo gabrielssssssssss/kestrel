@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/gabrielssssssssss/kestrel/internal/config"
 )
@@ -56,5 +57,11 @@ func PromptTurbo(prompt string) (string, error) {
 		return "", err
 	}
 
-	return payload.Output[0].Content[0].Text, nil
+	text := payload.Output[0].Content[0].Text
+	text = strings.TrimSpace(text)
+	text = strings.TrimPrefix(text, "```json")
+	text = strings.TrimPrefix(text, "```")
+	text = strings.TrimSuffix(text, "```")
+	text = strings.TrimSpace(text)
+	return text, nil
 }
