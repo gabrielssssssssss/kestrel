@@ -1,4 +1,4 @@
-package twitter
+package medias
 
 import (
 	"bytes"
@@ -80,7 +80,7 @@ func NewBearerToken() (string, error) {
 	return payload.AccessToken, nil
 }
 
-func GetProfile(username string) (Profile, error) {
+func GetTwitterProfile(username string) (Profile, error) {
 	var payload Profile
 
 	token, err := NewBearerToken()
@@ -104,7 +104,7 @@ func GetProfile(username string) (Profile, error) {
 	if err != nil {
 		return payload, err
 	}
-	fmt.Println(string(body))
+
 	err = json.Unmarshal([]byte(body), &payload)
 	if err != nil {
 		return payload, err

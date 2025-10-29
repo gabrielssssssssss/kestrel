@@ -5,20 +5,20 @@ import (
 	repository "github.com/gabrielssssssssss/kestrel/internal/repository/companies"
 )
 
-type GoogleMapsService struct {
-	repo *repository.GoogleMapsStruct
+type MapsService struct {
+	repo *repository.MapsStruct
 }
 
-func NewGoogleMapsService() *GoogleMapsService {
-	return &GoogleMapsService{
+func NewMapsService() *MapsService {
+	return &MapsService{
 		repo: repository.NewMappyRepository(),
 	}
 }
 
-func (s *GoogleMapsService) GetPlaceId(query string) (string, error) {
+func (s *MapsService) GetPlaceId(query string) (string, error) {
 	return s.repo.FetchPlaceId(query)
 }
 
-func (s *GoogleMapsService) GetPlaceDetails(id string) (models.GoogleMaps, error) {
+func (s *MapsService) GetPlaceDetails(id string) (models.Maps, error) {
 	return s.repo.FetchPlaceDetails(id)
 }

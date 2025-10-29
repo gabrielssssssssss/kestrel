@@ -11,14 +11,14 @@ import (
 	models "github.com/gabrielssssssssss/kestrel/internal/models/companies"
 )
 
-type GoogleMapsStruct struct{}
+type MapsStruct struct{}
 
-func NewMappyRepository() *GoogleMapsStruct {
-	return &GoogleMapsStruct{}
+func NewMappyRepository() *MapsStruct {
+	return &MapsStruct{}
 }
 
-func (r *GoogleMapsStruct) FetchPlaceId(query string) (string, error) {
-	var payload models.GoogleMapsPlaceId
+func (r *MapsStruct) FetchPlaceId(query string) (string, error) {
+	var payload models.MapsPlaceId
 
 	params := url.Values{}
 	params.Add("input", query)
@@ -50,8 +50,8 @@ func (r *GoogleMapsStruct) FetchPlaceId(query string) (string, error) {
 	return "", nil
 }
 
-func (r *GoogleMapsStruct) FetchPlaceDetails(placeId string) (models.GoogleMaps, error) {
-	var payload models.GoogleMaps
+func (r *MapsStruct) FetchPlaceDetails(placeId string) (models.Maps, error) {
+	var payload models.Maps
 
 	params := url.Values{}
 	params.Add("place_id", placeId)
@@ -71,7 +71,6 @@ func (r *GoogleMapsStruct) FetchPlaceDetails(placeId string) (models.GoogleMaps,
 		return payload, nil
 	}
 
-	fmt.Println(string(body))
 	err = json.Unmarshal([]byte(body), &payload)
 	if err != nil {
 		return payload, nil

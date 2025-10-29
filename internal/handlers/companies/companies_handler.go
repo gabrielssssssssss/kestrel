@@ -11,7 +11,7 @@ import (
 type CompaniesHandler struct {
 	serviceSirene   *services.SireneService
 	serviceCompany  *services.OrganizationService
-	serviceGmaps    *services.GoogleMapsService
+	serviceGmaps    *services.MapsService
 	serviceEmployee *services.EmployeeService
 	serviceWebsite  *services.WebsiteService
 }
@@ -20,7 +20,7 @@ func NewCompaniesHandler() *CompaniesHandler {
 	return &CompaniesHandler{
 		serviceSirene:   services.NewSireneService(),
 		serviceCompany:  services.NewOrganizationService(),
-		serviceGmaps:    services.NewGoogleMapsService(),
+		serviceGmaps:    services.NewMapsService(),
 		serviceEmployee: services.NewEmployeeService(),
 		serviceWebsite:  services.NewWebsiteService(),
 	}
@@ -38,7 +38,7 @@ func (h *CompaniesHandler) GetSireneHandler(c *gin.Context) {
 func (h *CompaniesHandler) GetCompanyHandler(c *gin.Context) {
 	var (
 		payload    models.Company
-		googleMaps models.GoogleMaps
+		googleMaps models.Maps
 		sirene     = c.Query("sirene")
 	)
 
@@ -61,7 +61,7 @@ func (h *CompaniesHandler) GetCompanyHandler(c *gin.Context) {
 
 	payload = models.Company{
 		Organization: organization,
-		GoogleMaps:   googleMaps,
+		Maps:         googleMaps,
 	}
 	c.JSON(http.StatusOK, payload)
 }
